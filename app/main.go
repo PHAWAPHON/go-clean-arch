@@ -1,3 +1,19 @@
+// Package main ...
+//
+// @title My PDF API
+// @version 1.0
+// @description This is a sample server for PDF management
+// @termsOfService http://swagger.io/terms/
+//
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+//
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+//
+// @BasePath /
+// @schemes http
 package main
 
 import (
@@ -11,9 +27,11 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
 
 	// "github.com/PHAWAPHON/go-clean-arch/article"
 	// mysqlRepo "github.com/PHAWAPHON/go-clean-arch/internal/repository/mysql"
+	_ "github.com/PHAWAPHON/go-clean-arch/app/docs" // เปลี่ยนเป็น module path ของโปรเจกต์คุณ
 	pdfRepo "github.com/PHAWAPHON/go-clean-arch/internal/repository/pdf_repo"
 	"github.com/PHAWAPHON/go-clean-arch/internal/rest"
 	"github.com/PHAWAPHON/go-clean-arch/internal/rest/middleware"
@@ -64,6 +82,7 @@ func main() {
 
 	e := echo.New()
 	e.Use(middleware.CORS)
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	timeoutStr := os.Getenv("CONTEXT_TIMEOUT")
 	timeout, err := strconv.Atoi(timeoutStr)
 	if err != nil {

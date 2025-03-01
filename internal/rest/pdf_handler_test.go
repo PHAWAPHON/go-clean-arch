@@ -70,7 +70,7 @@ func TestPDFMerge_Error(t *testing.T) {
 
 func TestPDFSplit_Success(t *testing.T) {
 	splitReq := domain.SplitRequest{
-		File:      "input.pdf",
+		File:      "ifile1.pdf",
 		OutputDir: "output",
 	}
 
@@ -96,7 +96,7 @@ func TestPDFSplit_Success(t *testing.T) {
 
 func TestPDFCompress_Success(t *testing.T) {
 	compressReq := domain.CompressRequest{
-		File:   "input.pdf",
+		File:   "file2.pd",
 		Output: "compressed.pdf",
 	}
 

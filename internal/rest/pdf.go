@@ -23,6 +23,7 @@ type PDFHandler struct {
 	Service PDFService
 }
 
+// NewPDFHandler registers the PDF endpoints
 func NewPDFHandler(e *echo.Echo, svc PDFService) {
 	handler := &PDFHandler{
 		Service: svc,
@@ -32,6 +33,17 @@ func NewPDFHandler(e *echo.Echo, svc PDFService) {
 	e.POST("/pdf/compress", handler.Compress)
 }
 
+// Merge godoc
+// @Summary Merge PDF files
+// @Description Merges multiple PDF files into one PDF file.
+// @Tags PDF
+// @Accept json
+// @Produce json
+// @Param mergeRequest body domain.MergeRequest true "Merge Request Body"
+// @Success 200 {object} map[string]string "Merge successful"
+// @Failure 400 {object} ResponseErrorPDF "Invalid request payload"
+// @Failure 500 {object} ResponseErrorPDF "Internal server error"
+// @Router /pdf/merge [post]
 func (h *PDFHandler) Merge(c echo.Context) error {
 	var req domain.MergeRequest
 	if err := c.Bind(&req); err != nil {
@@ -47,6 +59,19 @@ func (h *PDFHandler) Merge(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"message": "Merge successful"})
 }
 
+// Split godoc
+// @Summary Split PDF file
+// @Description Splits a single PDF file into multiple pages stored in a specified directory.
+// @Tags PDF
+// @Accept json
+// @Produce json
+// @Param splitRequest body domain.SplitRequest true "Split Request Body"
+// @Success 200 {object} map[string]string "Split successful"
+// @Failure 400 {object} ResponseErrorPDF "Invalid request payload"
+// @Failure 404 {object} ResponseErrorPDF "Not Found"
+// @Failure 409 {object} ResponseErrorPDF "Conflict error"
+// @Failure 500 {object} ResponseErrorPDF "Internal server error"
+// @Router /pdf/split [post]
 func (h *PDFHandler) Split(c echo.Context) error {
 	var req domain.SplitRequest
 	if err := c.Bind(&req); err != nil {
@@ -62,6 +87,19 @@ func (h *PDFHandler) Split(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"message": "Split successful"})
 }
 
+// Compress godoc
+// @Summary Compress PDF file
+// @Description Compresses a PDF file to reduce its size.
+// @Tags PDF
+// @Accept json
+// @Produce json
+// @Param compressRequest body domain.CompressRequest true "Compress Request Body"
+// @Success 200 {object} map[string]string "Compress successful"
+// @Failure 400 {object} ResponseErrorPDF "Invalid request payload"
+// @Failure 404 {object} ResponseErrorPDF "Not Found"
+// @Failure 409 {object} ResponseErrorPDF "Conflict error"
+// @Failure 500 {object} ResponseErrorPDF "Internal server error"
+// @Router /pdf/compress [post]
 func (h *PDFHandler) Compress(c echo.Context) error {
 	var req domain.CompressRequest
 	if err := c.Bind(&req); err != nil {
